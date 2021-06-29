@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
-from typing import List
+from typing import List, Union, Callable
 from abc import ABC, abstractmethod
+from logging import Filter
 
 
 class LoggingDefinition:
@@ -12,15 +13,23 @@ class LoggingDefinition:
         raise NotImplementedError(f'You must implement `definition` on {self.__class__.__name__}')
 
 @dataclass
-class Filter:
-    pass
+class Filter(LoggingDefinition):
+    name: str
+    filter_callable: Union[Callable, Filter]
+
+    @property
+    def definition(self):
+        return {
+            'filter_callable': self.filter_callable
+        }
+
 
 @dataclass
 class Handler:
     pass
 
 @dataclass
-class Logger:
+class Logger(LoggingDefinition):
     name: str
     level: str
     propagate: bool
