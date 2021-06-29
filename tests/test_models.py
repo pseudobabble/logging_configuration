@@ -7,15 +7,27 @@ from logging_configuration.models import Logger, Filter, Handler, Formatter
 
 
 def test__logger_creates_correct_dictionary():
+    mock_filter1 = Mock()
+    mock_filter1.name = 'filter1'
+    mock_filter2 = Mock()
+    mock_filter2.name = 'filter2'
+    mock_filters = [mock_filter1, mock_filter2]
+
+    mock_handler1 = Mock()
+    mock_handler1.name = 'handler1'
+    mock_handler2 = Mock()
+    mock_handler2.name = 'handler2'
+    mock_handlers = [mock_handler1, mock_handler2]
+
     logger = Logger(
-        name="logger", level="a level", propagate=True, filters=[], handlers=[]
+        name="logger", level="a level", propagate=True, filters=mock_filters, handlers=mock_handlers
     )
 
     assert logger.definition == {
         "level": "a level",
         "propagate": True,
-        "filters": [],
-        "handlers": [],
+        "filters": ['filter1', 'filter2'],
+        "handlers": ['handler1', 'handler2'],
     }
 
 

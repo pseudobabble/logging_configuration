@@ -70,6 +70,6 @@ class Logger(LoggingDefinition):
         return {
             "level": self.level,
             "propagate": self.propagate,
-            "filters": self.filters,
-            "handlers": self.handlers,
+            "filters": [filterator.name for filterator in self.filters],
+            "handlers": [handler.name for handler in self.handlers],
         }
