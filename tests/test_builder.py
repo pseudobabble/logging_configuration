@@ -34,8 +34,8 @@ def test__builder_builds_filters_correctly():
     )
 
     assert builder.build_filter_definitions() == {
-        'filter1': filter1.definition,
-        'filter2': filter2.definition
+        filter1.name: filter1.definition,
+        filter2.name: filter2.definition
    }
 
 def test__builder_builds_formatters_correctly():
@@ -53,6 +53,32 @@ def test__builder_builds_formatters_correctly():
     )
 
     assert builder.build_formatter_definitions() == {
-        'formatter1': formatter1.definition,
-        'formatter2': formatter2.definition
+        formatter1.name: formatter1.definition,
+        formatter2.name: formatter2.definition
+    }
+
+def test__builder_builds_handlers_correctly():
+    filter_callable_1 = lambda x: x
+    filter_callable_2 = lambda x: x
+    filter1 = Filter(name='filter1', logger_name="", filter_callable=filter_callable_1)
+    filter2 = Filter(name='filter2', logger_name="", filter_callable=filter_callable_1)
+    filters = [filter1, filter2]
+
+    formatter1 = Formatter(name='formatter1', output_format='some format 1', date_format='date format 1')
+    formatter2 = Formatter(name='formatter2', output_format='some format 2', date_format='date format 2')
+    formatters = [formatter1, formatter2]
+
+    handler1 = Handler(name='handler1', level='level1', handler_class='handler class 1', formatter=formatter1, filters=filters)
+    handler2 = Handler(name='handler2', level='level2', handler_class='handler class 2', formatter=formatter2, filters=filters)
+    handlers = [handler1, handler2]
+
+    mock_loggers = [Mock()]
+
+    builder = LoggingConfigurationBuilder(
+        mock_loggers, formatters, handlers, filters
+    )
+
+    assert builder.build_handler_definitions() == {
+        handler1.name: handler1.definition,
+        handler2.name: handler2.definition
     }

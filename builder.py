@@ -22,3 +22,6 @@ class LoggingConfigurationBuilder:
 
     def build_formatter_definitions(self):
         return {formatter.name: formatter.definition for formatter in self.formatters}
+
+    def build_handler_definitions(self):
+        return {handler.name: handler.definition for handler in self.handlers}

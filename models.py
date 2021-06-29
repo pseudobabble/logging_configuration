@@ -53,7 +53,7 @@ class Handler(LoggingDefinition):
             "level": self.level,
             "class": self.handler_class,
             "formatter": self.formatter,
-            "filters": self.filters,
+            "filters": [filter.name for filter in self.filters],
         }
 
 
