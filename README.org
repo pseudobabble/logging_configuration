@@ -1,4 +1,4 @@
 * Readme
 A simple configuration model to interface with the ~python~ ~logging.config.dictConfig~ logging configurator.
 
-Inspired by the need to provide a declarative and flexible logging configuration.
+Inspired by the need to +provide a declarative and flexible logging configuration+ over-engineer a perfectly good use-case.
