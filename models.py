@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import io
 from dataclasses import dataclass
 from typing import List, Union, Callable
 from abc import ABC, abstractmethod
@@ -56,6 +57,28 @@ class Handler(LoggingDefinition):
             "formatter": self.formatter.name,
             "filters": [filter.name for filter in self.filters],
         }
+
+@dataclass
+class StreamHandler(Handler):
+    stream: Union[str, io.TextIOBase]
+
+    @property
+    def definition(self):
+        definition = super().definition
+        definition['stream'] = self.stream
+
+        return definition
+
+@dataclass
+class FileHandler(Handler):
+    filename: str
+
+    @property
+    def definition(self):
+        definition = super().definition
+        definition['filename'] = self.filename
+
+        return definition
 
 
 @dataclass
