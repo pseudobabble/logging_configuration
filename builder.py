@@ -14,7 +14,7 @@ class LoggingConfigurationBuilder:
         version: int = 1,
         incremental: bool = False,
         disable_existing_loggers: bool = True
-    ):
+    ) -> None:
         self.loggers = loggers
         self.formatters = formatters
         self.handlers = handlers
@@ -23,19 +23,19 @@ class LoggingConfigurationBuilder:
         self.incremental = incremental
         self.disable_existing_loggers = disable_existing_loggers
 
-    def build_filter_definitions(self):
+    def build_filter_definitions(self) -> dict:
         return {filterator.name: filterator.definition for filterator in self.filters}
 
-    def build_formatter_definitions(self):
+    def build_formatter_definitions(self) -> dict:
         return {formatter.name: formatter.definition for formatter in self.formatters}
 
-    def build_handler_definitions(self):
+    def build_handler_definitions(self) -> dict:
         return {handler.name: handler.definition for handler in self.handlers}
 
-    def build_logger_definitions(self):
+    def build_logger_definitions(self) -> dict:
         return {logger.name: logger.definition for logger in self.loggers}
 
-    def build_logging_configuration(self):
+    def build_logging_configuration(self) -> dict:
         return {
             'version': self.version,
             'incremental': self.incremental,

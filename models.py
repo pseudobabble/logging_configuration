@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from logging import Filter
 
 
-class LoggingDefinition:
+class LoggingDefinition(ABC):
     @property
     @abstractmethod
     def definition(self) -> dict:
@@ -23,7 +23,7 @@ class Formatter(LoggingDefinition):
     validate: bool
 
     @property
-    def definition(self):
+    def definition(self) -> dict:
         return {"format": self.output_format, "date_fmt": self.date_format, 'validate': self.validate}
 
 
@@ -34,7 +34,7 @@ class Filter(LoggingDefinition):
     filter_callable: Union[Callable, Filter]
 
     @property
-    def definition(self):
+    def definition(self) -> dict:
         return {
             "logger_name": self.logger_name,
             "filter_callable": self.filter_callable,
@@ -50,7 +50,7 @@ class Handler(LoggingDefinition):
     filters: List[Filter]
 
     @property
-    def definition(self):
+    def definition(self) -> dict:
         return {
             "level": self.level,
             "class": self.handler_class,
@@ -63,7 +63,7 @@ class StreamHandler(Handler):
     stream: Union[str, io.TextIOBase]
 
     @property
-    def definition(self):
+    def definition(self) -> dict:
         definition = super().definition
         definition['stream'] = self.stream
 
@@ -74,7 +74,7 @@ class FileHandler(Handler):
     filename: str
 
     @property
-    def definition(self):
+    def definition(self) -> dict:
         definition = super().definition
         definition['filename'] = self.filename
 
@@ -90,7 +90,7 @@ class Logger(LoggingDefinition):
     handlers: List[Handler]
 
     @property
-    def definition(self):
+    def definition(self) -> dict:
         return {
             "level": self.level,
             "propagate": self.propagate,
