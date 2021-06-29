@@ -25,3 +25,6 @@ class LoggingConfigurationBuilder:
 
     def build_handler_definitions(self):
         return {handler.name: handler.definition for handler in self.handlers}
+
+    def build_logger_definitions(self):
+        return {logger.name: logger.definition for logger in self.loggers}
