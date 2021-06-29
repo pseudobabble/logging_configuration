@@ -3,9 +3,7 @@ from unittest.mock import Mock
 
 import pytest
 
-
-from logging_configuration.models import Logger, Filter, Handler
-
+from logging_configuration.models import Logger, Filter, Handler, Formatter
 
 def test__logger_creates_correct_dictionary():
     logger = Logger(
@@ -30,7 +28,7 @@ def test__filter_creates_correct_dictionary():
     }
 
 
-def test__handler_created_correct_dictionary():
+def test__handler_creates_correct_dictionary():
     mock_formatter = Mock()
     handler = Handler(
         name="handler",
@@ -46,3 +44,6 @@ def test__handler_created_correct_dictionary():
         'formatter': mock_formatter,
         'filters': []
     }
+
+def test_formatter_creates_correct_dictionary():
+    formatter = Formatter(name='formatter', output_format='format', date_format='date format',)

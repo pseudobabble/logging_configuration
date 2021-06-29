@@ -15,7 +15,9 @@ class LoggingDefinition:
 
 @dataclass
 class Formatter(LoggingDefinition):
-    pass
+    name: str
+    output_format: str
+    date_format: str
 
 @dataclass
 class Filter(LoggingDefinition):
