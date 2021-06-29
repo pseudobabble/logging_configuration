@@ -11,11 +11,17 @@ class LoggingConfigurationBuilder:
         formatters: List[Formatter],
         handlers: List[Handler],
         filters: List[Filter],
+        version: int = 1,
+        incremental: bool = False,
+        disable_existing_loggers: bool = True
     ):
         self.loggers = loggers
         self.formatters = formatters
         self.handlers = handlers
         self.filters = filters
+        self.version = version
+        self.incremental = incremental
+        self.disable_existing_loggers = disable_existing_loggers
 
     def build_filter_definitions(self):
         return {filterator.name: filterator.definition for filterator in self.filters}
@@ -28,3 +34,14 @@ class LoggingConfigurationBuilder:
 
     def build_logger_definitions(self):
         return {logger.name: logger.definition for logger in self.loggers}
+
+    def build_logging_configuration(self):
+        return {
+            'version': self.version,
+            'incremental': self.incremental,
+            'disable_existing_loggers': self.disable_existing_loggers,
+            'loggers': self.build_logger_definitions(),
+            'handlers': self.build_handler_definitions(),
+            'formatters': self.build_formatter_definitions(),
+            'filters': self.build_filter_definitions()
+        }

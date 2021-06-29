@@ -42,7 +42,7 @@ def test__filter_creates_correct_dictionary():
 
 
 def test__handler_creates_correct_dictionary():
-    mock_formatter = Mock()
+    formatter = Formatter(name='formatter', output_format='{message}', date_format='%Y-%m-%d', validate=False)
 
     mock_filter1 = Mock()
     mock_filter1.name = 'filter1'
@@ -53,14 +53,14 @@ def test__handler_creates_correct_dictionary():
         name="handler",
         level="level",
         handler_class="handler class",
-        formatter=mock_formatter,
+        formatter=formatter,
         filters=[mock_filter1, mock_filter2],
     )
 
     assert handler.definition == {
         "level": "level",
         "class": "handler class",
-        "formatter": mock_formatter,
+        "formatter": formatter.name,
         "filters": ['filter1', 'filter2'],
     }
 
@@ -70,6 +70,7 @@ def test__formatter_creates_correct_dictionary():
         name="formatter",
         output_format="format",
         date_format="date format",
+        validate=False
     )
 
-    assert formatter.definition == {"format": "format", "date_fmt": "date format"}
+    assert formatter.definition == {"format": "format", "date_fmt": "date format", 'validate': False}

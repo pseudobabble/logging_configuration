@@ -19,10 +19,11 @@ class Formatter(LoggingDefinition):
     name: str
     output_format: str
     date_format: str
+    validate: bool
 
     @property
     def definition(self):
-        return {"format": self.output_format, "date_fmt": self.date_format}
+        return {"format": self.output_format, "date_fmt": self.date_format, 'validate': self.validate}
 
 
 @dataclass
@@ -52,7 +53,7 @@ class Handler(LoggingDefinition):
         return {
             "level": self.level,
             "class": self.handler_class,
-            "formatter": self.formatter,
+            "formatter": self.formatter.name,
             "filters": [filter.name for filter in self.filters],
         }
 
