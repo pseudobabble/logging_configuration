@@ -15,18 +15,24 @@ class LoggingDefinition:
 @dataclass
 class Filter(LoggingDefinition):
     name: str
+    logger_name: str
     filter_callable: Union[Callable, Filter]
 
     @property
     def definition(self):
         return {
+            'logger_name': self.logger_name,
             'filter_callable': self.filter_callable
         }
 
 
 @dataclass
-class Handler:
-    pass
+class Handler(LoggingDefinition):
+    name: str
+
+    @property
+    def definition(self):
+        pass
 
 @dataclass
 class Logger(LoggingDefinition):

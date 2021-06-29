@@ -2,9 +2,9 @@
 import pytest
 
 
-from logging_configuration.models import Logger, Filter
+from logging_configuration.models import Logger, Filter, Handler
 
-def test_logger_creates_correct_dictionary():
+def test__logger_creates_correct_dictionary():
     logger = Logger(name='logger', level='a level', propagate=True, filters=[], handlers=[])
 
     assert logger.definition == {
@@ -14,10 +14,14 @@ def test_logger_creates_correct_dictionary():
         'handlers': []
     }
 
-def test_filter_creates_correct_dictionary():
+def test__filter_creates_correct_dictionary():
     returner = lambda x: x
-    filterator = Filter(name='filter', filter_callable=returner)
+    filterator = Filter(name='filter', logger_name='logger', filter_callable=returner)
 
     assert filterator.definition == {
+        'logger_name': 'logger',
         'filter_callable': returner
     }
+
+def test__handler_created_correct_dictionary():
+    handler = Handler(name='handler')
