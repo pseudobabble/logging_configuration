@@ -6,11 +6,16 @@ from logging import Filter
 
 
 class LoggingDefinition:
-
     @property
     @abstractmethod
     def definition(self) -> dict:
-        raise NotImplementedError(f'You must implement `definition` on {self.__class__.__name__}')
+        raise NotImplementedError(
+            f"You must implement `definition` on {self.__class__.__name__}"
+        )
+
+@dataclass
+class Formatter(LoggingDefinition):
+    pass
 
 @dataclass
 class Filter(LoggingDefinition):
@@ -21,18 +26,28 @@ class Filter(LoggingDefinition):
     @property
     def definition(self):
         return {
-            'logger_name': self.logger_name,
-            'filter_callable': self.filter_callable
+            "logger_name": self.logger_name,
+            "filter_callable": self.filter_callable,
         }
 
 
 @dataclass
 class Handler(LoggingDefinition):
     name: str
+    level: str
+    handler_class: str
+    formatter: Formatter
+    filters: List[Filter]
 
     @property
     def definition(self):
-        pass
+        return {
+            'level': self.level,
+            'class': self.handler_class,
+            'formatter': self.formatter,
+            'filters': self.filters
+        }
+
 
 @dataclass
 class Logger(LoggingDefinition):
@@ -45,8 +60,8 @@ class Logger(LoggingDefinition):
     @property
     def definition(self):
         return {
-            'level': self.level,
-            'propagate': self.propagate,
-            'filters': self.filters,
-            'handlers': self.handlers
+            "level": self.level,
+            "propagate": self.propagate,
+            "filters": self.filters,
+            "handlers": self.handlers,
         }
