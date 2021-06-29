@@ -13,11 +13,20 @@ class LoggingDefinition:
             f"You must implement `definition` on {self.__class__.__name__}"
         )
 
+
 @dataclass
 class Formatter(LoggingDefinition):
     name: str
     output_format: str
     date_format: str
+
+    @property
+    def definition(self):
+        return {
+            'format': self.output_format,
+            'date_fmt': self.date_format
+        }
+
 
 @dataclass
 class Filter(LoggingDefinition):
@@ -44,10 +53,10 @@ class Handler(LoggingDefinition):
     @property
     def definition(self):
         return {
-            'level': self.level,
-            'class': self.handler_class,
-            'formatter': self.formatter,
-            'filters': self.filters
+            "level": self.level,
+            "class": self.handler_class,
+            "formatter": self.formatter,
+            "filters": self.filters,
         }
 
 

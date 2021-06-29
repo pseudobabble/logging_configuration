@@ -5,6 +5,7 @@ import pytest
 
 from logging_configuration.models import Logger, Filter, Handler, Formatter
 
+
 def test__logger_creates_correct_dictionary():
     logger = Logger(
         name="logger", level="a level", propagate=True, filters=[], handlers=[]
@@ -39,11 +40,21 @@ def test__handler_creates_correct_dictionary():
     )
 
     assert handler.definition == {
-        'level': 'level',
-        'class' : 'handler class',
-        'formatter': mock_formatter,
-        'filters': []
+        "level": "level",
+        "class": "handler class",
+        "formatter": mock_formatter,
+        "filters": [],
     }
 
-def test_formatter_creates_correct_dictionary():
-    formatter = Formatter(name='formatter', output_format='format', date_format='date format',)
+
+def test__formatter_creates_correct_dictionary():
+    formatter = Formatter(
+        name="formatter",
+        output_format="format",
+        date_format="date format",
+    )
+
+    assert formatter.definition == {
+        'format': 'format',
+        'date_fmt': 'date format'
+    }
