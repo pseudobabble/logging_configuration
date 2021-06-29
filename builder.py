@@ -16,3 +16,6 @@ class LoggingConfigurationBuilder:
         self.formatters = formatters
         self.handlers = handlers
         self.filters = filters
+
+    def build_filter_definitions(self):
+        return {filterator.name: filterator.definition for filterator in self.filters}
