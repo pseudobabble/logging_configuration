@@ -21,6 +21,7 @@ class Handler:
 
 @dataclass
 class Logger:
+    name: str
     level: str
     propagate: bool
     filters: List[Filter]
