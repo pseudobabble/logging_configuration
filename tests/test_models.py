@@ -54,7 +54,4 @@ def test__formatter_creates_correct_dictionary():
         date_format="date format",
     )
 
-    assert formatter.definition == {
-        'format': 'format',
-        'date_fmt': 'date format'
-    }
+    assert formatter.definition == {"format": "format", "date_fmt": "date format"}

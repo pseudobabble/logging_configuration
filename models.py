@@ -22,10 +22,7 @@ class Formatter(LoggingDefinition):
 
     @property
     def definition(self):
-        return {
-            'format': self.output_format,
-            'date_fmt': self.date_format
-        }
+        return {"format": self.output_format, "date_fmt": self.date_format}
 
 
 @dataclass
