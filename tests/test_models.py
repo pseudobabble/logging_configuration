@@ -31,19 +31,23 @@ def test__filter_creates_correct_dictionary():
 
 def test__handler_creates_correct_dictionary():
     mock_formatter = Mock()
+    mock_filter1 = Mock()
+    mock_filter1.name = 'filter1'
+    mock_filter2 = Mock()
+    mock_filter2.name = 'filter2'
     handler = Handler(
         name="handler",
         level="level",
         handler_class="handler class",
         formatter=mock_formatter,
-        filters=[],
+        filters=[mock_filter1, mock_filter2],
     )
 
     assert handler.definition == {
         "level": "level",
         "class": "handler class",
         "formatter": mock_formatter,
-        "filters": [],
+        "filters": ['filter1', 'filter2'],
     }
 
 
